@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
 
 void mbash() {
     // Supprimer le saut de ligne final
+    printf("%s",cmd);
     //cmd[strlen(cmd) - 1] = '\0';
 
     // Séparer la commande en utilisant " " comme délimiteur
