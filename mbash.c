@@ -63,7 +63,7 @@ void mbash() {
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
     while (pathToken != NULL) {
-        sprintf(path, "%s/%s/", pathToken, args[0]);
+        sprintf(path, "%s/%s", pathToken, args[0]);
         if (access(path, X_OK) == 0) {
             found = 1;
             break;
