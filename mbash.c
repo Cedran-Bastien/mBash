@@ -34,7 +34,7 @@ void mbash() {
     while (token != NULL) {
         args[i] = token;
         i++;
-        printf(args[i]);
+        printf("i : " + i);
         token = strtok(NULL, " ");
     }
 
