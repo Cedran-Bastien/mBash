@@ -119,8 +119,8 @@
         idx++;
         argv[idx] = strtok(NULL, " \t\n");
     }
-        execve()
-    //execvp(argv[0], argv);
+
+    execvp(argv[0], argv);
     printf("Command not found\n");
     exit(1);
     }
