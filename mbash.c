@@ -19,53 +19,80 @@ int main(int argc, char** argv) {
     while (1) {
         printf("Commande: ");
         fgets(cmd, MAXLI, stdin);
-        mbash(cmd);
+        parse_cmd(); 
+        execute_cmd(); 
+    } 
+    return 0; 
+ } 
+ void getpath() {
+    char *path_env = getenv("PATH"); 
+    strcpy(path, path_env);
+    pathidx = strlen(path); 
+ }
+ void parse_cmd() { 
+    char *p = strtok(cmd, " \t\n");
+    add_to_history(cmd);
+    if (strcmp(p, "cd") == 0)
+    { 
+        p = strtok(NULL, " \t\n");
+        if (p == NULL) {
+            printf("cd: missing operand\n");
+            return;
+            }
+            if (chdir(p) != 0) {
+            perror("cd");
+            }
+        }
+        return;
+    
+    else if (strcmp(p, "history") == 0)
+    {
+        print_history();
+        return;
     }
-    return 0;
-}
-
-void mbash() {
-    // Supprimer le saut de ligne final
-    cmd[strlen(cmd) - 1] = '\0';
-
-    // Séparer la commande en utilisant " " comme délimiteur
-    char* token = strtok(cmd, " ");
-    int i = 0;
-    while (token != NULL) {
-        args[i++] = token;
-        token = strtok(NULL, " ");
+    else if (strcmp(p, "pwd") == 0) { 
+        char cwd[MAXLI];
+        if (getcwd(cwd, sizeof(cwd)) != NULL) printf("%s\n", cwd);
+        else perror("getcwd() error"); return; }
+        else if (strcmp(p, "exit") == 0) {
+        exit(0); 
+    } 
+    else 
+    { 
+        char fullcmd[MAXLI];
+        int background = 0; 
+    if (p[strlen(p) - 1] == '&')
+    { 
+        background = 1;
+        p[strlen(p) - 1] = '\0';
+    } 
+    sprintf(fullcmd, "%s/%s", path, p);
+    strcpy(cmd, fullcmd);
+    if (background) strcat(cmd, " &");
     }
-    args[i] = NULL;
-
-    // Vérifier si la commande est "cd"
-    if (strcmp(args[0], "cd") == 0) {
-        if (args[1] == NULL) {
-            printf("Erreur: Ve");
-
-} else {
-if (chdir(args[1]) != 0) {
-printf("Erreur: Impossible de changer de répertoire.\n");
-}
-}
-}
-// Vérifier si la commande est "pwd"
-else if (strcmp(args[0], "pwd") == 0) {
-char cwd[MAXLI];
-if (getcwd(cwd, sizeof(cwd)) != NULL) {
-printf("%s\n", cwd);
-} else {
-printf("Erreur: Impossible de récupérer le répertoire courant.\n");
-}
-}
-
-                                                                                                                  
-else {
-int background = 0;
-if (strcmp(args[i - 1], "&") == 0) {
-background = 1;
-args[i - 1] = NULL;
-}
-
+ }
+ void add_to_history(char *cmd)
+ {
+    struct command *new_cmd = malloc(sizeof(struct command));
+    strcpy(new_cmd->cmd, cmd);
+    new_cmd->next = NULL;
+    if (head == NULL) { 
+        head = new_cmd;
+        tail = new_cmd;
+    } else { 
+        tail->next = new_cmd; 
+        tail = new_cmd; 
+    } 
+ }
+ void print_history() { 
+    struct command *current = head;
+    int idx = 1;
+    while (current != NULL) {
+        printf("%d %s\n", idx, current->cmd);
+        current = current->next; idx++;
+    }
+ }
+ 
 
     // Vérifier si la commande existe dans les répertoires de la variable PATH
     int found = 0;
@@ -79,20 +106,18 @@ args[i - 1] = NULL;
         }
         pathToken = strtok(NULL, ":");
     }
-
-    if (!found) {
-        printf("Erreur: Commande introuvable.\n");
-    } else {
-        if (!background) {
-            execve(path, args, NULL);
-            printf("Erreur: Impossible d'exécuter la commande.\n");
-        } else {
-            pid_t pid = fork();
-            if (pid == 0) {
-                execve(path, args, NULL);
-                printf("Erreur: Impossible d'exécuter la commande.\n");
-            }
-        }
+    if (pid == 0) {
+        char *argv[MAXLI];
+        int idx = 0;
+        argv[idx] = strtok(cmd, " \t\n");
+    while (argv[idx] != NULL) 
+    { 
+        idx++;
+        argv[idx] = strtok(NULL, " \t\n");
+    }
+    execvp(argv[0], argv);
+    printf("Command not found\n");
+    exit(1);
     }
 }
 }
