@@ -32,8 +32,9 @@ void mbash() {
     char* token = strtok(cmd, " ");
     int i = 0;
     while (token != NULL) {
-        token = strtok(NULL, " ");
         args[i++] = token;
+        token = strtok(NULL, " ");
+
     }
 
     //args[strlen(args)-1] = NULL;
