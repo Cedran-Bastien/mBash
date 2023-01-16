@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
 void mbash() {
     // Supprimer le saut de ligne final
-    cmd[strlen(cmd) - 1] = '\0';
+    //cmd[strlen(cmd) - 1] = '\0';
 
     // Séparer la commande en utilisant " " comme délimiteur
     char* token = strtok(cmd, " ");
@@ -35,36 +35,32 @@ void mbash() {
         args[i++] = token;
         token = strtok(NULL, " ");
     }
-    args[i] = NULL;
+    args[i] = NULL;//? token Null jamais ajouter
 
     // Vérifier si la commande est "cd"
     if (strcmp(args[0], "cd") == 0) {
         if (args[1] == NULL) {
             printf("Erreur: Ve");
 
-} else {
-if (chdir(args[1]) != 0) {
-printf("Erreur: Impossible de changer de répertoire.\n");
-}
-}
-}
-// Vérifier si la commande est "pwd"
-else if (strcmp(args[0], "pwd") == 0) {
-char cwd[MAXLI];
-if (getcwd(cwd, sizeof(cwd)) != NULL) {
-printf("%s\n", cwd);
-} else {
-printf("Erreur: Impossible de récupérer le répertoire courant.\n");
-}
-}
-
-                                                                                                                  
-else {
-int background = 0;
-if (strcmp(args[i - 1], "&") == 0) {
-background = 1;
-args[i - 1] = NULL;
-}
+        } else if (chdir(args[1]) != 0){
+                printf("Erreur: Impossible de changer de répertoire.\n");
+        }
+    }
+    // Vérifier si la commande est "pwd"
+    else if (strcmp(args[0], "pwd") == 0) {
+        char cwd[MAXLI];
+        if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            printf("%s\n", cwd);
+        } else {
+            printf("Erreur: Impossible de récupérer le répertoire courant.\n");
+        }
+    }
+    else {
+        int background = 0;
+        if (strcmp(args[i - 1], "&") == 0) {
+        background = 1;
+        args[i - 1] = NULL;
+    }
 
 
     // Vérifier si la commande existe dans les répertoires de la variable PATH
