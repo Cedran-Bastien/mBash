@@ -35,12 +35,11 @@ void mbash() {
         args[i++] = token;
         token = strtok(NULL, " ");
     }
-    //args[i] = NULL;//? token Null jamais ajouter
 
     // Vérifier si la commande est "cd"
     if (strcmp(args[0], "cd") == 0) {
         if (args[1] == NULL) {
-            printf("Erreur: Ve");
+            chdir(getenv("$HOME"));
 
         } else if (chdir(args[1]) != 0){
                 printf("Erreur: Impossible de changer de répertoire.\n");
@@ -56,13 +55,6 @@ void mbash() {
         }
     }
     else {
-        int background = 0;
-        if (strcmp(args[i - 1], "&") == 0) {
-        background = 1;
-        args[i - 1] = NULL;
-    }
-
-
     // Vérifier si la commande existe dans les répertoires de la variable PATH
     int found = 0;
     char* pathEnv = getenv("PATH");
@@ -79,14 +71,14 @@ void mbash() {
     if (!found) {
         printf("Erreur: Commande introuvable.\n");
     } else {
-        if (!background) {
+        pid_t pid = fork();
+        if (pid == 0) {
             execve(path, args, NULL);
             printf("Erreur: Impossible d'exécuter la commande.\n");
-        } else {
-            pid_t pid = fork();
-            if (pid == 0) {
-                execve(path, args, NULL);
-                printf("Erreur: Impossible d'exécuter la commande.\n");
+        }else {
+            // le "&" est presents
+            if (!strcmp(args[i - 1], "&") == 0){
+                waitpid();
             }
         }
     }
