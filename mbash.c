@@ -49,12 +49,11 @@
     { 
         p = strtok(NULL, " \t\n");
         if (p == NULL) {
-            printf("cd: missing operand\n");
-            return;
-            }
-            if (chdir(p) != 0) {
-            perror("cd");
-            }
+            chdir(getenv("$HOME"));
+        } else {
+            chdir(p);
+        }
+
     }
     else if (strcmp(p, "history") == 0)
     {
