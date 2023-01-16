@@ -27,14 +27,16 @@ int main(int argc, char** argv) {
 void mbash() {
     // Supprimer le saut de ligne final
     cmd[strlen(cmd) - 1] = '\0';
-    //printf("%s\0",cmd);
+
     // Séparer la commande en utilisant " " comme délimiteur
     char* token = strtok(cmd, " ");
     int i = 0;
     while (token != NULL) {
-        args[i++] = token;
         token = strtok(NULL, " ");
+        args[i++] = token;
     }
+
+    args[strlen(args)-1] = NULL;
 
     // Vérifier si la commande est "cd"
     if (strcmp(args[0], "cd") == 0) {
@@ -60,7 +62,7 @@ void mbash() {
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
     while (pathToken != NULL) {
-        sprintf(path, "%s/%s", pathToken, args[0]);
+        sprintf(path, "%s/%s/", pathToken, args[0]);
         if (access(path, X_OK) == 0) {
             found = 1;
             break;
