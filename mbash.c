@@ -57,7 +57,7 @@
             }
         }
         return;
-    }
+    
     else if (strcmp(p, "history") == 0)
     {
         print_history();
