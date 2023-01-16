@@ -35,7 +35,7 @@ void mbash() {
         args[i++] = token;
         token = strtok(NULL, " ");
     }
-    args[i] = NULL;//? token Null jamais ajouter
+    //args[i] = NULL;//? token Null jamais ajouter
 
     // Vérifier si la commande est "cd"
     if (strcmp(args[0], "cd") == 0) {
