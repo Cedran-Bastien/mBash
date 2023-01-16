@@ -60,13 +60,13 @@
         print_history();
         return;
     }
-//    else if (strcmp(p, "pwd") == 0) {
-//        char cwd[MAXLI];
-//        if (getcwd(cwd, sizeof(cwd)) != NULL) printf("%s\n", cwd);
-//        else perror("getcwd() error"); return; }
-//        else if (strcmp(p, "exit") == 0) {
-//        exit(0);
-//    }
+    else if (strcmp(p, "pwd") == 0) {
+        char cwd[MAXLI];
+        if (getcwd(cwd, sizeof(cwd)) != NULL) printf("%s\n", cwd);
+        else perror("getcwd() error"); return; }
+        else if (strcmp(p, "exit") == 0) {
+        exit(0);
+    }
     else 
     { 
         char fullcmd[MAXLI];
