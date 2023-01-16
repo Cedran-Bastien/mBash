@@ -32,8 +32,7 @@ void mbash() {
     char* token = strtok(cmd, " ");
     int i = 0;
     while (token != NULL) {
-        args[i] = token;
-        i++;
+        args[i++] = token;
         printf("i : " + i);
         token = strtok(NULL, " ");
     }
@@ -76,15 +75,14 @@ void mbash() {
         printf("Erreur: Commande introuvable.\n");
     } else {
         pid_t pid = fork();
-        if (pid == 0) {
-
+        if (pid == 0) { 
             execve(path, args, NULL);
             printf("Erreur: Impossible d'exécuter la commande.\n");
         }else {
             // le "&" est presents
             if (!strcmp(args[i - 1], "&") == 0){
                 waitpid(pid,NULL,0);
-            }
+            } 
         }
     }
 }
