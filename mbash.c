@@ -78,7 +78,7 @@ void mbash() {
         }else {
             // le "&" est presents
             if (!strcmp(args[i - 1], "&") == 0){
-                waitpid();
+                waitpid(pid);
             }
         }
     }
