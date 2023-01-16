@@ -60,13 +60,13 @@
         print_history();
         return;
     }
-    else if (strcmp(p, "pwd") == 0) { 
-        char cwd[MAXLI];
-        if (getcwd(cwd, sizeof(cwd)) != NULL) printf("%s\n", cwd);
-        else perror("getcwd() error"); return; }
-        else if (strcmp(p, "exit") == 0) {
-        exit(0); 
-    } 
+//    else if (strcmp(p, "pwd") == 0) {
+//        char cwd[MAXLI];
+//        if (getcwd(cwd, sizeof(cwd)) != NULL) printf("%s\n", cwd);
+//        else perror("getcwd() error"); return; }
+//        else if (strcmp(p, "exit") == 0) {
+//        exit(0);
+//    }
     else 
     { 
         char fullcmd[MAXLI];
@@ -119,7 +119,8 @@
         idx++;
         argv[idx] = strtok(NULL, " \t\n");
     }
-    execvp(argv[0], argv);
+        execve()
+    //execvp(argv[0], argv);
     printf("Command not found\n");
     exit(1);
     }
