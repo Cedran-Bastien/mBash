@@ -81,14 +81,15 @@ int main(int argc, char *argv[]) {
         }
         else {
             printf("%s", "else");
-            printf("%s",strcat("/bin/",args[0]));
+            char inter[50] ="/usr/bin/" ;
+            strcat(inter,args[0]):
             int pid = fork();
             // Lancer la commande en utilisant execve
             if (pid == 0)
             {
                 printf("%s","fils");
 
-                execve(strcat("/bin/",args[0]), args, NULL);
+                execve(strcat(inter,args[0]), args, NULL);
             }
             else
             {
