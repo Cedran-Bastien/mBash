@@ -38,7 +38,8 @@ void mbash(char* cmd) {
 
     // Séparer la commande en utilisant " " comme délimiteur
     char* token = strtok(cmd, " ");
-    int i = 0;
+    cmd = token;
+     int i = 1;
     while (token != NULL) {
         args[i] = token;
         i++;
@@ -46,7 +47,6 @@ void mbash(char* cmd) {
     }
     args[i] = NULL;
 
-     printf("commande %s",args[0]);
      printf("argument %s", args[1]);
 
 
@@ -81,6 +81,9 @@ void mbash(char* cmd) {
         }
         pathToken = strtok(NULL, ":");
     }
+
+    printf("argument %s", args[0]);
+
 
 //    if (!found) {
 //        printf("Erreur: Commande introuvable.\n");
