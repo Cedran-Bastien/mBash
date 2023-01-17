@@ -91,7 +91,9 @@ int main(int argc, char *argv[]) {
             }
             else
             {
+                printf("%s","pere1");
                 waitpid(pid, NULL, 0);
+                printf("%s","pere2");
             }
             
         }
