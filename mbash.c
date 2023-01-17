@@ -105,7 +105,7 @@ int main(int argc, char *argv[], char envp[]) {
             {
                 strcat(inter,"/");
                 strcat(inter,args[0]);
-                printf("inter 1%s",inter);
+                printf(" inter 1 :%s",inter);
                 if (access(inter, X_OK) == 0) {
                     found = 0;
                     break;
@@ -113,7 +113,7 @@ int main(int argc, char *argv[], char envp[]) {
 
                 inter = strtok_r(NULL, ":", &saveptr);
 
-                printf("inter2 %s", inter);
+                printf(" inter2 :%s", inter);
             }
 
             if  (!found){
