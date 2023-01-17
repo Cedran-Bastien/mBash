@@ -41,8 +41,8 @@ void mbash(char* cmd) {
     cmd = token;
     int i = 0;
     while (token != NULL) {
-        token = strtok(NULL, " ");
         args[i] = token;
+        token = strtok(NULL, " ");
         i++;
     }
     args[i] = NULL;
@@ -58,6 +58,7 @@ void mbash(char* cmd) {
         } else if (chdir(args[0]) != 0){
                 printf("Erreur: Impossible de changer de répertoire.\n");
         }
+        return;
     }
     // Vérifier si la commande est "pwd"
     else if (strcmp(cmd, "pwd") == 0) {
@@ -67,12 +68,14 @@ void mbash(char* cmd) {
         } else {
             printf("Erreur: Impossible de récupérer le répertoire courant.\n");
         }
+        return;
     }
     else {
     // Vérifier si la commande existe dans les répertoires de la variable PATH
     int found = 0;
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
+    path[MAXLI] = NULL;
     while (pathToken != NULL) {
         sprintf(path, "%s/%s", pathToken, cmd);
         if (access(path, X_OK) == 0) {
