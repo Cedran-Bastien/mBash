@@ -55,16 +55,16 @@ int main(int argc, char *argv[]) {
             getcwd(cwd, sizeof(cwd));
             printf("%s\n", cwd);
         }
-        else if (strcmp(args[0], "history") == 0) {
-            // Gérer la commande history
-            int start = history_count - 10;
-            if (start < 0) {
-                start = 0;
-            }
-            for (int i = start; i < history_count; i++) {
-                printf("%d %s\n", i + 1, history[i % MAX_HISTORY]);
-            }
-        }
+//        else if (strcmp(args[0], "history") == 0) {
+//            // Gérer la commande history
+//            int start = history_count - 10;
+//            if (start < 0) {
+//                start = 0;
+//            }
+//            for (int i = start; i < history_count; i++) {
+//                printf("%d %s\n", i + 1, history[i % MAX_HISTORY]);
+//            }
+//        }
         else if (strcmp(args[0], "ls") == 0) {
             // Gérer la commande ls
             args[0] = "ls";
