@@ -97,30 +97,40 @@ int main(int argc, char *argv[], char envp[]) {
             } */
 
             // Vérifier si la commande existe dans les répertoires de la variable PATH
+            int found = 0
             char *path = getenv("PATH");
             char *saveptr;
             char *inter = strtok_r(path, ":", &saveptr);
             while (inter != NULL)
             {
+                strcat(inter,args[0]);
+                if (access(inter, X_OK) == 0) {
+                    found = 0;
+                    break;
+                }
 
                 inter = strtok_r(NULL, ":", &saveptr);
+
                 printf("inter %s", inter);
             }
 
-
-            int pid;
-            pid= fork();
-            // Lancer la commande en utilisant execve
-            if (pid == 0)
-            {
-                printf("%s","fils");
-                execve(inter, args, envp);
-            }
-            else
-            {
-                printf("%s","pere1");
-                waitpid(pid, NULL, 0);
-                printf("%s","pere2");
+            if  (!found){
+                printf("%s : commande introuvable" , args[0]);
+            } else{
+                int pid;
+                pid= fork();
+                // Lancer la commande en utilisant execve
+                if (pid == 0)
+                {
+                    printf("%s","fils");
+                    execve(inter, args, envp);
+                }
+                else
+                {
+                    printf("%s","pere1");
+                    waitpid(pid, NULL, 0);
+                    printf("%s","pere2");
+                }
             }
             
         }
