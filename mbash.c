@@ -38,29 +38,28 @@ void mbash(char* cmd) {
 
     // Séparer la commande en utilisant " " comme délimiteur
     char* token = strtok(cmd, " ");
-    cmd = token;
     int i = 0;
     while (token != NULL) {
-        token = strtok(NULL, " ");
         args[i++] = token;
+        token = strtok(NULL, " ");
     }
     args[i] = NULL;
 
 
 
     // Vérifier si la commande est "cd"
-    printf(cmd);
-    if (strcmp(cmd, "cd") == 0) {
-        printf("argument %s", args[0]);
-        if (args[0] == NULL || strcmp(args[0], "~") == 0) {
+    printf(args[0]);
+    if (strcmp(args[0], "cd") == 0) {
+        printf("argument %s", args[1]);
+        if (args[1] == NULL || strcmp(args[1], "~") == 0) {
             chdir(getenv("HOME"));
 
-        } else if (chdir(args[0]) != 0){
+        } else if (chdir(args[1]) != 0){
                 printf("Erreur: Impossible de changer de répertoire.\n");
         }
     }
     // Vérifier si la commande est "pwd"
-    else if (strcmp(cmd, "pwd") == 0) {
+    else if (strcmp(args[0], "pwd") == 0) {
         char cwd[MAXLI];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
             printf("%s\n", cwd);
@@ -74,7 +73,7 @@ void mbash(char* cmd) {
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
     while (pathToken != NULL) {
-        sprintf(path, "%s/%s", pathToken, cmd);
+        sprintf(path, "%s/%s", pathToken, args[0]);
         if (access(path, X_OK) == 0) {
             found = 1;
             break;
@@ -83,7 +82,7 @@ void mbash(char* cmd) {
     }
 
         printf("commande %s",path);
-        printf("argument %s", args[0]);
+        printf("argument %s", args[1]);
 
     if (!found) {
         printf("Erreur: Commande introuvable.\n");
@@ -121,7 +120,7 @@ void mbash() {
     args[strlen(args)-1] = NULL;
 
     // Vérifier si la commande est "cd"
-    if (strcmp(args[0], "cd") == 0) {
+    if (strcmp(args[1], "cd") == 0) {
         if (args[1] == NULL) {
             chdir(getenv("$HOME"));
 
@@ -130,7 +129,7 @@ void mbash() {
         }
     }
     // Vérifier si la commande est "pwd"
-    else if (strcmp(args[0], "pwd") == 0) {
+    else if (strcmp(args[1], "pwd") == 0) {
         char cwd[MAXLI];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
             printf("%s\n", cwd);
@@ -144,7 +143,7 @@ void mbash() {
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
     while (pathToken != NULL) {
-        sprintf(path, "%s/%s", pathToken, args[0]);
+        sprintf(path, "%s/%s", pathToken, args[1]);
         if (access(path, X_OK) == 0) {
             found = 1;
             break;
