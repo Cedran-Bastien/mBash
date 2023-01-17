@@ -105,6 +105,7 @@ int main(int argc, char *argv[], char envp[]) {
             {
                 strcat(inter,"/");
                 strcat(inter,args[0]);
+                printf(inter);
                 if (access(inter, X_OK) == 0) {
                     found = 0;
                     break;
