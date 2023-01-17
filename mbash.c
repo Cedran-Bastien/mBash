@@ -65,20 +65,20 @@ int main(int argc, char *argv[], char envp[]) {
                 printf("%d %s\n", i + 1, history[i % MAX_HISTORY]);
             }
         }
-        else if (strcmp(args[0], "ls") == 0) {
-            // Gérer la commande ls
-            args[0] = "ls";
-            int pid = fork();
-            if (pid == 0)
-            {
-                execve("/bin/ls", args, NULL);
-            }
-            else
-            {
-                waitpid(pid, NULL, 0);
-            }
-            
-        }
+//        else if (strcmp(args[0], "ls") == 0) {
+//            // Gérer la commande ls
+//            args[0] = "ls";
+//            int pid = fork();
+//            if (pid == 0)
+//            {
+//                execve("/bin/ls", args, NULL);
+//            }
+//            else
+//            {
+//                waitpid(pid, NULL, 0);
+//            }
+//
+//        }
         else {
             printf("%s", "else");
             char inter[50] ="/usr/bin/" ;
