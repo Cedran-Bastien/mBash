@@ -50,6 +50,7 @@ void mbash(char* cmd) {
 
 
     // Vérifier si la commande est "cd"
+    printf(cmd);
     if (strcmp(cmd, "cd") == 0) {
         if (args[1] == NULL || args[1] == "~") {
             chdir(getenv("$HOME"));
