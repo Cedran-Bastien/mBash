@@ -46,9 +46,13 @@ void mbash(char* cmd) {
     }
     args[i] = NULL;
 
+     printf("commande %s",args[0]);
+     printf("argument %s", args[1]);
+
+
     // Vérifier si la commande est "cd"
     if (strcmp(args[0], "cd") == 0) {
-        if (args[1] == NULL) {
+        if (args[1] == NULL || args[1] == "~") {
             chdir(getenv("$HOME"));
 
         } else if (chdir(args[1]) != 0){
@@ -78,20 +82,20 @@ void mbash(char* cmd) {
         pathToken = strtok(NULL, ":");
     }
 
-    if (!found) {
-        printf("Erreur: Commande introuvable.\n");
-    } else {
-        pid_t pid = fork();
-        if (pid == 0) { 
-            execve(path, args, NULL);
-            printf("Erreur: Impossible d'exécuter la commande.\n");
-        }else {
-            // le "&" est presents
-            if (!strcmp(args[i - 1], "&") == 0){
-                waitpid(pid,NULL,0);
-            } 
-        }
-    }
+//    if (!found) {
+//        printf("Erreur: Commande introuvable.\n");
+//    } else {
+//        pid_t pid = fork();
+//        if (pid == 0) {
+//            execve(path, args, NULL);
+//            printf("Erreur: Impossible d'exécuter la commande.\n");
+//        }else {
+//            // le "&" est presents
+//            if (!strcmp(args[i - 1], "&") == 0){
+//                waitpid(pid,NULL,0);
+//            }
+//        }
+//    }
 }
 }
 
