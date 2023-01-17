@@ -104,8 +104,9 @@ int main(int argc, char *argv[], char envp[]) {
             {
 
                 inter = strtok_r(NULL, ":", &saveptr);
+                printf("inter %s", inter);
             }
-            printf("inter %s", inter);
+
 
             int pid;
             pid= fork();
