@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
             {
                 printf("%s","fils");
 
-                execve(strcat(inter,args[0]), args, NULL);
+                execve(inter, args, NULL);
             }
             else
             {
