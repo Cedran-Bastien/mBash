@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
             // Lancer la commande en utilisant execve
             if (pid == 0)
             {
-                execve(args[0], args, NULL);
+                execve(strcat("/usr/bin/",args[0]), args, NULL);
             }
             else
             {
