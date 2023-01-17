@@ -26,13 +26,19 @@ int main(int argc, char *argv[], char envp[]) {
         fgets(input, sizeof(input), stdin);
         input[strcspn(input, "\r\n")] = 0; // enlever les caractères de fin de ligne
 
-// Ajouter la commande à l'historique
+        // Ajouter la commande à l'historique
         strcpy(history[history_count++ % MAX_HISTORY], input);
 
         // Parser la commande et les arguments
         char *command = strtok(input, " ");
         char *args[64];
         int i = 0;
+
+        if (command == NULL) {
+            printf("%s", "Veuillez entrer une commande \n");
+            continue;
+        }
+
         while (command != NULL) {
             args[i++] = command;
             command = strtok(NULL, " ");
@@ -65,38 +71,55 @@ int main(int argc, char *argv[], char envp[]) {
                 printf("%d %s\n", i + 1, history[i % MAX_HISTORY]);
             }
         }
-//        else if (strcmp(args[0], "ls") == 0) {
-//            // Gérer la commande ls
-//            args[0] = "ls";
-//            int pid = fork();
-//            if (pid == 0)
-//            {
-//                execve("/bin/ls", args, NULL);
-//            }
-//            else
-//            {
-//                waitpid(pid, NULL, 0);
-//            }
+        else if (strcmp(args[0], "ls") == 0) {
+            // Gérer la commande ls
+            args[0] = "ls";
+            int pid = fork();
+            if (pid == 0)
+            {
+                execve("/bin/ls", args, NULL);
+            }
+            else
+            {
+                waitpid(pid, NULL, 0);
+            }
 //
-//        }
+        }
         else {
-            printf("%s", "else");
-            char inter[50] ="/usr/bin/" ;
-            strcat(inter,args[0]);
-            int pid;
-            pid= fork();
+            //printf("%s", "else");
+            // recuperer le path de la commande
+            /*char *path = getenv("PATH");
+            char *inter = strtok(path, ":");
+            while (inter != NULL)
+            {
+                //printf("%s", inter);
+                inter = strtok(NULL, ":");
+            } */
+
+            // Vérifier si la commande existe dans les répertoires de la variable PATH
+            char *path = getenv("PATH");
+            char *saveptr;
+            char *inter = strtok_r(path, ":", &saveptr);
+            while (inter != NULL)
+            {
+                //printf("%s", inter);
+                inter = strtok_r(NULL, ":", &saveptr);
+            }
+
+
+            int pid= fork();
             // Lancer la commande en utilisant execve
             if (pid == 0)
             {
-                printf("%s","fils");
+                //printf("%s","fils");
 
                 execve(inter, args, envp);
             }
             else
             {
-                printf("%s","pere1");
+                //printf("%s","pere1");
                 waitpid(pid, NULL, 0);
-                printf("%s","pere2");
+                //printf("%s","pere2");
             }
             
         }
