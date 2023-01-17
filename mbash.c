@@ -105,7 +105,7 @@ int main(int argc, char *argv[], char envp[]) {
 
                 inter = strtok_r(NULL, ":", &saveptr);
             }
-            printf("%s", inter);
+            printf("inter %s", inter);
 
             int pid;
             pid= fork();
@@ -113,7 +113,6 @@ int main(int argc, char *argv[], char envp[]) {
             if (pid == 0)
             {
                 printf("%s","fils");
-
                 execve(inter, args, envp);
             }
             else
