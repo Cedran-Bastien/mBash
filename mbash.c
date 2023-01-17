@@ -102,25 +102,25 @@ int main(int argc, char *argv[], char envp[]) {
             char *inter = strtok_r(path, ":", &saveptr);
             while (inter != NULL)
             {
-                //printf("%s", inter);
+
                 inter = strtok_r(NULL, ":", &saveptr);
             }
-
+            printf("%s", inter);
 
             int pid;
             pid= fork();
             // Lancer la commande en utilisant execve
             if (pid == 0)
             {
-                //printf("%s","fils");
+                printf("%s","fils");
 
                 execve(inter, args, envp);
             }
             else
             {
-                //printf("%s","pere1");
+                printf("%s","pere1");
                 waitpid(pid, NULL, 0);
-                //printf("%s","pere2");
+                printf("%s","pere2");
             }
             
         }
