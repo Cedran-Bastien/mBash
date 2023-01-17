@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
         else {
             printf("%s", "else");
             char inter[50] ="/usr/bin/" ;
-            strcat(inter,args[0]):
+            strcat(inter,args[0]);
             int pid;
             pid= fork();
             // Lancer la commande en utilisant execve
