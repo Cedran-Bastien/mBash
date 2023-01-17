@@ -52,10 +52,10 @@ void mbash(char* cmd) {
     // Vérifier si la commande est "cd"
     printf(cmd);
     if (strcmp(cmd, "cd") == 0) {
-        if (args[1] == NULL || args[1] == "~") {
+        if (args[1] == NULL || strcmp(args[1], "~") == 0) {
             chdir(getenv("$HOME"));
 
-        } else if (chdir(args[1]) != 0){
+        } else if (chdir(args[0]) != 0){
                 printf("Erreur: Impossible de changer de répertoire.\n");
         }
     }
