@@ -71,6 +71,18 @@ void mbash(char* cmd,char *envp[]) {
     // Vérifier si la commande existe dans les répertoires de la variable PATH
     int found = 0;
     char* pathEnv = getenv("PATH");
+    char path[1024];
+    char* pathToken = strtok_r(pathEnv, ":", &pathEnv);
+    while (pathToken != NULL) {
+    sprintf(path, "%s/%s", pathToken, args[0]);
+    if (access(path, X_OK) == 0) {
+    found = 1;
+    break;
+    }
+    pathToken = strtok_r(NULL, ":", &pathEnv);
+    }
+    /*int found = 0;
+    char* pathEnv = getenv("PATH");
     char* pathToken = strtok_r(pathEnv, ":", getenv("PATH"));
     while (pathToken != NULL) {
         sprintf(path, "%s/%s", pathToken, args[0]);
@@ -79,7 +91,7 @@ void mbash(char* cmd,char *envp[]) {
             break;
         }
         pathToken = strtok_r(NULL, ":",getenv("PATH"));
-    }
+    } */
 
         printf("\ncommande %s",path);
         printf("\nargument %s", args[1]);
