@@ -103,7 +103,8 @@ int main(int argc, char *argv[], char envp[]) {
             char *inter = strtok_r(path, ":", &saveptr);
             while (inter != NULL)
             {
-                //strcat(inter,args[0]);
+                strcat(inter,"/");
+                strcat(inter,args[0]);
                 if (access(inter, X_OK) == 0) {
                     found = 0;
                     break;
