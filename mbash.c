@@ -90,8 +90,7 @@ void mbash(char* cmd) {
     } else {
         pid_t pid = fork();
         if (pid == 0) {
-            char env[1] = {(char) NULL};
-            execve(path, args, env);
+            execve(path, args, NULL);
             printf("Erreur: Impossible d'exécuter la commande.\n");
         }else {
             // le "&" est presents
