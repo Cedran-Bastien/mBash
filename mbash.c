@@ -52,7 +52,6 @@ void mbash(char* cmd) {
     // Vérifier si la commande est "cd"
     printf(cmd);
     if (strcmp(cmd, "cd") == 0) {
-        strcmp(cmd, "cd");
         if (args[0] == NULL || strcmp(args[0], "~") == 0) {
             chdir(getenv("$HOME"));
 
@@ -70,37 +69,37 @@ void mbash(char* cmd) {
         }
     }
     else {
-        // Vérifier si la commande existe dans les répertoires de la variable PATH
-        int found = 0;
-        char* pathEnv = getenv("PATH");
-        char* pathToken = strtok(pathEnv, ":");
-        while (pathToken != NULL) {
-            sprintf(path, "%s/%s", pathToken, cmd);
-            if (access(path, X_OK) == 0) {
-                found = 1;
-                break;
-            }
-            pathToken = strtok(NULL, ":");
+    // Vérifier si la commande existe dans les répertoires de la variable PATH
+    int found = 0;
+    char* pathEnv = getenv("PATH");
+    char* pathToken = strtok(pathEnv, ":");
+    while (pathToken != NULL) {
+        sprintf(path, "%s/%s", pathToken, cmd);
+        if (access(path, X_OK) == 0) {
+            found = 1;
+            break;
         }
+        pathToken = strtok(NULL, ":");
+    }
 
-            printf("\ncommande %s",path);
-            printf("\nargument %s", args[0]);
+        printf("commande %s",path);
+        printf("argument %s", args[0]);
 
-        if (!found) {
-            printf("Erreur: Commande introuvable.\n");
-        } else {
-            pid_t pid = fork();
-            if (pid == 0) {
-                execve(path, args, NULL);
-                printf("Erreur: Impossible d'exécuter la commande.\n");
-            }else {
-                // le "&" est presents
-                if (!strcmp(args[i - 1], "&") == 0){
-                    waitpid(pid,NULL,0);
-                }
+    if (!found) {
+        printf("Erreur: Commande introuvable.\n");
+    } else {
+        pid_t pid = fork();
+        if (pid == 0) {
+            execve(path, args, NULL);
+            printf("Erreur: Impossible d'exécuter la commande.\n");
+        }else {
+            // le "&" n'est pas presents
+            if (!strcmp(args[i - 1], "&") == 0){
+                waitpid(pid,NULL,0);
             }
         }
     }
+}
 }
 
 
