@@ -75,7 +75,7 @@ void mbash(char* cmd) {
     int found = 0;
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
-    path[MAXLI] = NULL;
+    //path[MAXLI] = NULL;
     while (pathToken != NULL) {
         sprintf(path, "%s/%s", pathToken, cmd);
         if (access(path, X_OK) == 0) {
