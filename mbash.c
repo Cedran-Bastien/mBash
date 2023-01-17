@@ -38,11 +38,12 @@ void mbash(char* cmd) {
 
     // Séparer la commande en utilisant " " comme délimiteur
     char* token = strtok(cmd, " ");
+    cmd = token;
     int i = 0;
     while (token != NULL) {
+        token = strtok(NULL, " ");
         args[i] = token;
         i++;
-        token = strtok(NULL, " ");
     }
     args[i] = NULL;
 
@@ -72,7 +73,7 @@ void mbash(char* cmd) {
     char* pathEnv = getenv("PATH");
     char* pathToken = strtok(pathEnv, ":");
     while (pathToken != NULL) {
-        sprintf(path, "%s/%s", pathToken, args[0]);
+        sprintf(path, "%s/%s", pathToken, cmd);
         if (access(path, X_OK) == 0) {
             found = 1;
             break;
