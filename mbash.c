@@ -85,8 +85,9 @@ int main(int argc, char *argv[]) {
             // Lancer la commande en utilisant execve
             if (pid == 0)
             {
-                printf("%s",strcat("/usr/bin/",args[0]));
-                execve(strcat("/usr/bin/",args[0]), args, NULL);
+                printf("%s","fils");
+                printf("%s",strcat("/bin/",args[0]));
+                execve(strcat("/bin/",args[0]), args, NULL);
             }
             else
             {
