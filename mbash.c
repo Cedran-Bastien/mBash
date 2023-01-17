@@ -42,8 +42,7 @@ void mbash(char* cmd) {
     int i = 0;
     while (token != NULL) {
         token = strtok(NULL, " ");
-        args[i] = token;
-        i++;
+        args[i++] = token;
     }
     args[i] = NULL;
 
@@ -54,7 +53,7 @@ void mbash(char* cmd) {
     if (strcmp(cmd, "cd") == 0) {
         printf("argument %s", args[0]);
         if (args[0] == NULL || strcmp(args[0], "~") == 0) {
-            chdir(getenv("$HOME"));
+            chdir(getenv("HOME"));
 
         } else if (chdir(args[0]) != 0){
                 printf("Erreur: Impossible de changer de répertoire.\n");
