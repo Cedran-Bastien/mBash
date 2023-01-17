@@ -81,7 +81,7 @@ void mbash(char* cmd) {
     }
 
         printf("commande %",path);
-        printf("argument %s", args[1]);
+        printf("argument %s", args[0]);
 
 //    if (!found) {
 //        printf("Erreur: Commande introuvable.\n");
