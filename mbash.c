@@ -6,6 +6,98 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define MAX_HISTORY 100
+
+int main(int argc, char *argv[]) {
+    char input[1024];
+    char cwd[1024];
+    char hostname[1024];
+    char *username;
+    char history[MAX_HISTORY][1024];
+    int history_count = 0;
+
+    while (1) {
+        // afficher le prompt
+        username = getlogin();
+        gethostname(hostname, sizeof(hostname));
+        getcwd(cwd, sizeof(cwd));
+        printf("%s@%s:%s$ ", username, hostname, cwd);
+        
+        fgets(input, sizeof(input), stdin);
+        input[strcspn(input, "\r\n")] = 0; // enlever les caractères de fin de ligne
+
+// Ajouter la commande à l'historique
+        strcpy(history[history_count++ % MAX_HISTORY], input);
+
+        // Parser la commande et les arguments
+        char *command = strtok(input, " ");
+        char *args[64];
+        int i = 0;
+        while (command != NULL) {
+            args[i++] = command;
+            command = strtok(NULL, " ");
+        }
+        args[i] = NULL; // execve attend un tableau d'arguments terminé par NULL
+
+        if (strcmp(args[0], "cd") == 0) {
+            // Gérer la commande cd
+            if (args[1] == NULL || strcmp(args[1], "~") == 0)
+            {
+                chdir(getenv("HOME"));
+            }
+            else
+            {
+                chdir(args[1]);
+            }   
+        } else if (strcmp(args[0], "pwd") == 0) {
+            // Gérer la commande pwd
+            char cwd[1024];
+            getcwd(cwd, sizeof(cwd));
+            printf("%s\n", cwd);
+        }
+        else if (strcmp(args[0], "history") == 0) {
+            // Gérer la commande history
+            int start = history_count - 10;
+            if (start < 0) {
+                start = 0;
+            }
+            for (int i = start; i < history_count; i++) {
+                printf("%d %s\n", i + 1, history[i % MAX_HISTORY]);
+            }
+        }
+        else if (strcmp(args[0], "ls") == 0) {
+            // Gérer la commande ls
+            args[0] = "ls";
+            int pid = fork();
+            if (pid == 0)
+            {
+                execve("/bin/ls", args, NULL);
+            }
+            else
+            {
+                waitpid(pid, NULL, 0);
+            }
+            
+        }
+        else {
+            int pid = fork();
+            // Lancer la commande en utilisant execve
+            if (pid == 0)
+            {
+                execve(args[0], args, NULL);
+            }
+            else
+            {
+                waitpid(pid, NULL, 0);
+            }
+            
+        }
+    }
+
+    return 0;
+}
+
+/*
 #define MAXLI 2048
 
 char cmd[MAXLI];
@@ -32,6 +124,7 @@ commande cd, à pouvoir afficher le répertoire courant avec pwd et à lancer
 une commande, comme le fait bash, c’est-à-dire en respectant le contenu de la
 variable PATH.*/
 // Fonction qui permet de lancer une commande en utilisant la variable PATH
+/*
 void mbash(char* cmd,char *envp[]) {
     // Supprimer le saut de ligne final
     cmd[strlen(cmd) - 1] = '\0';
@@ -71,7 +164,7 @@ void mbash(char* cmd,char *envp[]) {
     // Vérifier si la commande existe dans les répertoires de la variable PATH
     int found = 0;
     char* pathEnv = getenv("PATH");
-    char path[1024];
+    //char path[1024];
     char* pathToken = strtok_r(pathEnv, ":", &pathEnv);
     while (pathToken != NULL) {
     sprintf(path, "%s/%s", pathToken, args[0]);
@@ -92,6 +185,7 @@ void mbash(char* cmd,char *envp[]) {
         }
         pathToken = strtok_r(NULL, ":",getenv("PATH"));
     } */
+    /*
 
         printf("\ncommande %s",path);
         printf("\nargument %s", args[1]);
@@ -111,71 +205,4 @@ void mbash(char* cmd,char *envp[]) {
         }
     }
 }
-}
-
-
-/*
-void mbash() {
-    // Supprimer le saut de ligne final
-    cmd[strlen(cmd) - 1] = '\0';
-
-    // Séparer la commande en utilisant " " comme délimiteur
-    char* token = strtok(cmd, " ");
-    int i = 0;
-    while (token != NULL) {
-        args[i] = token;
-        i++;
-        printf("i : " + i);
-        token = strtok(NULL, " ");
-    }
-
-    args[strlen(args)-1] = NULL;
-
-    // Vérifier si la commande est "cd"
-    if (strcmp(args[1], "cd") == 0) {
-        if (args[1] == NULL) {
-            chdir(getenv("$HOME"));
-
-        } else if (chdir(args[1]) != 0){
-                printf("Erreur: Impossible de changer de répertoire.\n");
-        }
-    }
-    // Vérifier si la commande est "pwd"
-    else if (strcmp(args[1], "pwd") == 0) {
-        char cwd[MAXLI];
-        if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            printf("%s\n", cwd);
-        } else {
-            printf("Erreur: Impossible de récupérer le répertoire courant.\n");
-        }
-    }
-    else {
-    // Vérifier si la commande existe dans les répertoires de la variable PATH
-    int found = 0;
-    char* pathEnv = getenv("PATH");
-    char* pathToken = strtok(pathEnv, ":");
-    while (pathToken != NULL) {
-        sprintf(path, "%s/%s", pathToken, args[1]);
-        if (access(path, X_OK) == 0) {
-            found = 1;
-            break;
-        }
-        pathToken = strtok(NULL, ":");
-    }
-
-    if (!found) {
-        printf("Erreur: Commande introuvable.\n");
-    } else {
-        pid_t pid = fork();
-        if (pid == 0) { 
-            execve(path, args, NULL);
-            printf("Erreur: Impossible d'exécuter la commande.\n");
-        }else {
-            // le "&" est presents
-            if (!strcmp(args[i - 1], "&") == 0){
-                waitpid(pid,NULL,0);
-            } 
-        }
-    }
-}
-}*/
+} */
