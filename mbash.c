@@ -50,7 +50,7 @@ void mbash(char* cmd) {
 
 
     // Vérifier si la commande est "cd"
-    if (strcmp(args[0], "cd") == 0) {
+    if (strcmp(cmd, "cd") == 0) {
         if (args[1] == NULL || args[1] == "~") {
             chdir(getenv("$HOME"));
 
@@ -59,7 +59,7 @@ void mbash(char* cmd) {
         }
     }
     // Vérifier si la commande est "pwd"
-    else if (strcmp(args[0], "pwd") == 0) {
+    else if (strcmp(cmd, "pwd") == 0) {
         char cwd[MAXLI];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
             printf("%s\n", cwd);
