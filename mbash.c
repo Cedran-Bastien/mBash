@@ -84,20 +84,20 @@ void mbash(char* cmd) {
         printf("commande %s",path);
         printf("argument %s", args[0]);
 
-//    if (!found) {
-//        printf("Erreur: Commande introuvable.\n");
-//    } else {
-//        pid_t pid = fork();
-//        if (pid == 0) {
-//            execve(path, args, NULL);
-//            printf("Erreur: Impossible d'exécuter la commande.\n");
-//        }else {
-//            // le "&" est presents
-//            if (!strcmp(args[i - 1], "&") == 0){
-//                waitpid(pid,NULL,0);
-//            }
-//        }
-//    }
+    if (!found) {
+        printf("Erreur: Commande introuvable.\n");
+    } else {
+        pid_t pid = fork();
+        if (pid == 0) {
+            execve(path, args, NULL);
+            printf("Erreur: Impossible d'exécuter la commande.\n");
+        }else {
+            // le "&" est presents
+            if (!strcmp(args[i - 1], "&") == 0){
+                waitpid(pid,NULL,0);
+            }
+        }
+    }
 }
 }
 
