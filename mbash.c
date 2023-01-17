@@ -80,7 +80,7 @@ void mbash(char* cmd) {
         pathToken = strtok(NULL, ":");
     }
 
-        printf("commande %",path);
+        printf("commande %s",path);
         printf("argument %s", args[0]);
 
 //    if (!found) {
