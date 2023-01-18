@@ -88,7 +88,7 @@ int main(int argc, char *argv[], char *envp[]) {
             }
 
             if  (!found){
-                printf("%s : commande introuvable" , args[0]);
+                printf("%s : commande introuvable\n" , args[0]);
             } else{
                 int pid;
                 pid= fork();
