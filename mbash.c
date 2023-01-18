@@ -98,7 +98,7 @@ int main(int argc, char *argv[], char *envp[]) {
 
             // Vérifier si la commande existe dans les répertoires de la variable PATH
             int found = 0;
-            char *path = getenv("PATH");
+            char *pathq  =  getenv(strdup("PATH"));
             char *saveptr;
             char *inter = strtok_r(path, ":", &saveptr);
             char *Complet=malloc(sizeof(char)*50);
