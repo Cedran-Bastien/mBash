@@ -35,7 +35,6 @@ int main(int argc, char *argv[], char *envp[]) {
         int i = 0;
 
         if (command == NULL) {
-            printf("%s", "Veuillez entrer une commande \n");
             continue;
         }
 
