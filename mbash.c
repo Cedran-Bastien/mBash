@@ -101,9 +101,10 @@ int main(int argc, char *argv[], char envp[]) {
             char *path = getenv("PATH");
             char *saveptr;
             char *inter = strtok_r(path, ":", &saveptr);
+            char *Complet;
             while (inter != NULL)
             {
-                sprintf(inter,"%s/%s",inter,args[0]);
+                sprintf(Complet,"%s/%s",inter,args[0]);
                 printf(" inter 1 :%s",inter);
                 if (access(inter, X_OK) == 0) {
                     found = 0;
