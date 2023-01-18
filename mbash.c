@@ -105,7 +105,7 @@ int main(int argc, char *argv[], char envp[]) {
             while (inter != NULL)
             {
                 sprintf(Complet,"%s/%s",inter,args[0]);
-                printf(" inter 1 :%s",Complet);
+                printf(" inter 1 :%s\n",Complet);
 
 //                if (access(Complet, X_OK) == 0) {
 //                    found = 0;
@@ -114,7 +114,7 @@ int main(int argc, char *argv[], char envp[]) {
 
                 inter = strtok_r(NULL, ":", &saveptr);
 
-                printf(" inter2 :%s", inter);
+                printf(" inter2 :%s \n", inter);
             }
 
             if  (!found){
