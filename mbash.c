@@ -101,7 +101,7 @@ int main(int argc, char *argv[], char *envp[]) {
             char *path = getenv("PATH");
             char *saveptr;
             char *inter = strtok_r(path, ":", &saveptr);
-            char *Complet;
+            char *Complet=malloc(sizeof(char)*50);
             while (inter != NULL)
             {
                 sprintf(Complet,"%s/%s",inter,args[0]);
