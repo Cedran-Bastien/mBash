@@ -107,10 +107,10 @@ int main(int argc, char *argv[], char *envp[]) {
                 sprintf(Complet,"%s/%s",inter,args[0]);
                 printf(" inter 1 :%s\n",Complet);
 
-//                if (access(Complet, X_OK) == 0) {
-//                    found = 0;
-//                    break;
-//                }
+                if (access(Complet, X_OK) == 0) {
+                    found = 0;
+                    break;
+                }
 
                 inter = strtok_r(NULL, ":", &saveptr);
 
