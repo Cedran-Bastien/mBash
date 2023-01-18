@@ -8,7 +8,7 @@
 
 #define MAX_HISTORY 100
 
-int main(int argc, char *argv[], char envp[]) {
+int main(int argc, char *argv[], char *envp[]) {
     char input[1024];
     char cwd[1024];
     char hostname[1024];
