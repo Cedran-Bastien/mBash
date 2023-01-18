@@ -108,7 +108,7 @@ int main(int argc, char *argv[], char *envp[]) {
                 printf(" inter 1 :%s\n",Complet);
 
                 if (access(Complet, X_OK) == 0) {
-                    found = 0;
+                    found = 1;
                     break;
                 }
 
